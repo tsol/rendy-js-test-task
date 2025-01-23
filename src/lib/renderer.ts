@@ -49,7 +49,7 @@ export class Renderer {
    */
   watch(schema: SchemaItem) {
 
-    this.render(schema);
+    this.update(schema);
     
     const reactiveSchema = makeReactive(schema, () => {
       this.update(reactiveSchema);

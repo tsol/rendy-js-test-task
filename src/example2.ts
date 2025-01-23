@@ -36,7 +36,7 @@ export function example2()
 
   setTimeout(() => {
 
-    reactiveSchema.children![1].props['style'] = 'padding: 3em';
+    reactiveSchema.children![1]!.props!['style'] = 'padding: 3em';
 
   }, 3000);
 

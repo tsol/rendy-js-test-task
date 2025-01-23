@@ -9,7 +9,6 @@ import { Renderer } from "./lib/renderer";
     {
       tag: 'button',
       text: 'Example 1',
-      props: {},
       listeners: {
         click: example1
       }
@@ -17,7 +16,6 @@ import { Renderer } from "./lib/renderer";
     {
       tag: 'button',
       text: 'Example 2',
-      props: {},
       listeners: {
         click: example2
       }

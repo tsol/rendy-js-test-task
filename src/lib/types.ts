@@ -3,11 +3,11 @@ type TagKey = keyof HTMLElementTagNameMap;
 export type SchemaItem = {
   tag: TagKey;
   text?: string;
-  props: {
+  props?: {
     [key: string]: string;
   };
   listeners?: {
-    [type: string]: | EventListenerOrEventListenerObject;
+    [type: string]: EventListenerOrEventListenerObject;
   };
   children?: SchemaItem[];
 }

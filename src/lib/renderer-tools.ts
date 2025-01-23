@@ -3,7 +3,7 @@ import { SchemaItem } from "./types";
 export function createElement(schema: SchemaItem): HTMLElement {
   const element = document.createElement(schema.tag);
 
-  for (const [key, value] of Object.entries(schema.props)) {
+  for (const [key, value] of Object.entries(schema.props || {})) {
     element.setAttribute(key, value);
   }
 
@@ -44,14 +44,14 @@ export function recursivelyUpdateIfDiffers(dom: HTMLElement, schema: SchemaItem)
     dom.textContent = schema.text || ''; // Update text content
   }
 
-  for (const [key, value] of Object.entries(schema.props)) {
+  for (const [key, value] of Object.entries(schema.props || {})) {
     if (dom.getAttribute(key) !== value) {
       dom.setAttribute(key, value);
     }
   }
   
   for (const attr of dom.getAttributeNames()) {
-    if (!schema.props[attr]) {
+    if (!schema.props?.[attr]) {
       dom.removeAttribute(attr);
     }
   }
