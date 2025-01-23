@@ -7,7 +7,6 @@ import { Renderer } from "./lib/renderer";
 
 export function example2()
 {
-
   const rendy = new Renderer('example2');
 
   const reactiveSchema = rendy.watch({
@@ -40,5 +39,17 @@ export function example2()
     reactiveSchema.children![1].props['style'] = 'padding: 3em';
 
   }, 3000);
+
+  setTimeout(() => {
+
+    reactiveSchema.children!.push({
+      tag: 'p',
+      text: 'This is a new paragraph added after 5 seconds.',
+      props: {
+        class: 'bg-green'
+      }
+    });
+
+  }, 5000);
 
 }

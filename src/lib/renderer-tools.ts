@@ -7,6 +7,12 @@ export function createElement(schema: SchemaItem): HTMLElement {
     element.setAttribute(key, value);
   }
 
+  if (schema.listeners) {
+    for (const [eventType, listener] of Object.entries(schema.listeners)) {
+      addEventListener(element, eventType, listener);
+    }
+  }
+
   if (schema.text) {
     element.textContent = schema.text;
   }
@@ -18,7 +24,6 @@ export function createElement(schema: SchemaItem): HTMLElement {
     }
   }
 
-  console.log('createElement', element);
   return element;
 }
 
@@ -48,6 +53,25 @@ export function recursivelyUpdateIfDiffers(dom: HTMLElement, schema: SchemaItem)
   for (const attr of dom.getAttributeNames()) {
     if (!schema.props[attr]) {
       dom.removeAttribute(attr);
+    }
+  }
+
+  const existingListeners = getAttachedListeners(dom);
+  for (const eventType in existingListeners) {
+    if (!schema.listeners || !schema.listeners[eventType]) {
+      removeEventListener(dom, eventType, existingListeners[eventType]);
+    }
+  }
+
+  if (schema.listeners) {
+    for (const [eventType, listener] of Object.entries(schema.listeners)) {
+      const existingListener = existingListeners[eventType];
+      if (existingListener !== listener) {
+        if (existingListener) {
+          removeEventListener(dom, eventType, existingListener);
+        }
+        addEventListener(dom, eventType, listener);
+      }
     }
   }
 
@@ -82,7 +106,7 @@ export function makeReactive(schema: SchemaItem, callback: () => void): SchemaIt
       if (oldValue !== value) {
         const success = Reflect.set(target, prop, value, receiver);
         if (success) {
-          callback(); // Trigger the callback when the property changes
+          callback(); 
         }
         return success;
       }
@@ -92,3 +116,19 @@ export function makeReactive(schema: SchemaItem, callback: () => void): SchemaIt
 }
 
 
+
+function addEventListener(dom: HTMLElement, type: string, listener: EventListenerOrEventListenerObject) {
+  dom.addEventListener(type, listener);
+  (dom as any).__listeners = (dom as any).__listeners || {};
+  (dom as any).__listeners[type] = listener; 
+}
+
+function removeEventListener(dom: HTMLElement, type: string, listener: EventListenerOrEventListenerObject) {
+  dom.removeEventListener(type, listener);
+  (dom as any).__listeners = (dom as any).__listeners || {};
+  (dom as any).__listeners[type] = undefined; 
+}
+
+function getAttachedListeners(dom: HTMLElement) {
+  return (dom as any).__listeners || {};
+}

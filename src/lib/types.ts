@@ -6,5 +6,8 @@ export type SchemaItem = {
   props: {
     [key: string]: string;
   };
+  listeners?: {
+    [type: string]: | EventListenerOrEventListenerObject;
+  };
   children?: SchemaItem[];
 }

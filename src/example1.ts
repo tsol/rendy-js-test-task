@@ -20,7 +20,7 @@ export function example1()
     children: [
       {
         tag: 'h1',
-        text: 'Hello, World!',
+        text: 'Example 1',
         props: {
           class: 'bg-red'
         }

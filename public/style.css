@@ -33,7 +33,6 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  background-color: red;
 }
 
 #app {
@@ -41,6 +40,17 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
@@ -64,5 +74,10 @@ h1 {
 
 .bg-red {
   background-color: #ff6464;
+  color: #fff;
+}
+
+.bg-green {
+  background-color: #64ff64;
   color: #fff;
 }
